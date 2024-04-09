@@ -1,38 +1,96 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Main from "./layouts/Main";
-import Posts from "./pages/Posts";
-import Create from "./pages/Create";
-import { loader as PostLoder } from "./pages/Posts";
-import Details from "./pages/Details";
-import { loader as DetailLoader } from "./pages/Details";
-import { action as PostcreateAction } from "./pages/Create";
+import React, { useState } from "react";
+
+const data = [
+  {
+    id: "1",
+    question: "what are accordion components",
+    answer:
+      "accordion components are used interface element used for original and presenting",
+  },
+  {
+    id: "2",
+    question: "what are they used for components",
+    answer:
+      "accordion components are used interface element used for original and presenting",
+  },
+  {
+    id: "3",
+    question: "Accordian as a musical instruments",
+    answer:
+      "accordion components are used interface element used for original and presenting",
+  },
+  {
+    id: "4",
+    question:
+      "Can i create an accordion components with a different framework?",
+    answer:
+      "accordion components are used interface element used for original and presenting",
+  },
+];
 
 const App = () => {
-  const router = createBrowserRouter([
-  { 
-    path: "/", 
-    element: <Main />,
-    children:[
-    {
-      index:true,
-      element : <Posts />,
-      loader : PostLoder
-    },
-    {
-      path:"/create-post",
-      element : <Create />,
-      action : PostcreateAction
-    },
-    {
-      path:"/post-details/:id",
-      element: <Details />,
-      loader : DetailLoader 
-    }
-  ]
+  const [selected, setSelected] = useState(null);
+  const [enableMultiSelection, setEnableMultiSelection] = useState(false);
+  const [multiple, setMultiple] = useState([]);
 
-  }]);
+  function handleSingleSelection(getCurrentId) {
+    //  setSelected(getCurrentId) //to add id
+    setSelected(getCurrentId === selected ? null : getCurrentId); //to remove current id
+  }
+
+  function handleMultiSelection(getCurrentId) {
+    let cpyMutiple = [...multiple];
+    console.log(cpyMutiple);
+    const findIndexOfCurrentId = cpyMutiple.indexOf(getCurrentId);
+    console.log(findIndexOfCurrentId);
+
+    if (findIndexOfCurrentId === -1) cpyMutiple.push(getCurrentId);
+
+    else cpyMutiple.splice(findIndexOfCurrentId, 1);
+    console.log(cpyMutiple)
+
+    setMultiple(cpyMutiple);
+  }
+
+  // console.log(selected);
+  
+  console.log(multiple);
   return (
-    <RouterProvider router={router}/>
+    <div className="Wrapper">
+      <div>
+        <button
+          className="BtnClick"
+          onClick={() => setEnableMultiSelection(!enableMultiSelection)}
+        >
+          Enable Multi Selection
+        </button>
+      </div>
+      <div className="accordian">
+        {data && data.length > 0 ? (
+          data.map((dataItem) => (
+            <div className="item" key={dataItem.id}>
+              <div
+                className="title"
+                onClick={
+                  enableMultiSelection
+                    ? () => handleMultiSelection(dataItem.id)
+                    : () => handleSingleSelection(dataItem.id)
+                }
+              >
+                <h3>{dataItem.question}</h3>
+                <span>+</span>
+              </div>
+              {selected === dataItem.id ||
+              multiple.indexOf(dataItem.id) !== -1 ? (
+                <div>{dataItem.answer}</div>
+              ) : null}
+            </div>
+          ))
+        ) : (
+          <div>NO DATA</div>
+        )}
+      </div>
+    </div>
   );
 };
 
