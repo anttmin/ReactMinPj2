@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 const data = [
   {
     id: "1",
@@ -29,69 +30,65 @@ const data = [
 
 const App = () => {
   const [selected, setselected] = useState(null);
-  const [EnableMultiSelection, setEnableMultiSelection] = useState(false);
+  const [multiSelected, setMultiSelectd] = useState(false);
   const [multiple, setmultiple] = useState([]);
-
-  function handleSingleSelection(getCurrentId) {
-    setselected(selected === getCurrentId ? null : getCurrentId);
+  function singleSection(CurrentId) {
+    setselected(selected === CurrentId ? null : CurrentId);
   }
 
+  function MultiSelection(CurrentId) {
+    let cpymultiple = [...multiple];
+     console.log(cpymultiple);
+    let findIndexOf = cpymultiple.indexOf(CurrentId);
+     console.log(findIndexOf);
+
+    if (findIndexOf === -1) {
+      cpymultiple.push(CurrentId);
+    } else {
+      cpymultiple.splice(findIndexOf, 1);
+    }
+    setmultiple(cpymultiple);
+    console.log(findIndexOf);
+    console.log(cpymultiple);
+    console.log(multiple.indexOf(CurrentId));
+  }
+  
   // console.log(selected);
-
-  function handleMultiSelection(getCurrentId) {
-    //ဘာလိုarrayနဲ့ထည့်ကလည်းဆိုတော့ arry အလွတ်ထဲကနေ indexOfနဲရှာမယ် နဂိုထဲကအလွတ်ဆိုတော့ -1ထွက်မယ်အဲဒီ-1နဲ့ချိတ်ကမယ်အဲဒါကkeyပဲ****
-    let cpyMutiple = [...multiple];
-    console.log(cpyMutiple);//အလွတ်
-    console.log(getCurrentId);//id တေွဝင်မယ်
-
-    const findIndexOfCurrentId = cpyMutiple.indexOf(getCurrentId);//ပြီးရင်cpyထဲမှာရှာမယ်မတေွရင်-1ထုတ်
-    console.log(findIndexOfCurrentId);
-
-    if (findIndexOfCurrentId === -1) cpyMutiple.push(getCurrentId);//-1နဲ့ညီရင်cpy arrayထဲကိုid တေွကိုထည့်မယ်
-    else cpyMutiple.splice(findIndexOfCurrentId, 1);//မဟုတ်ရင်arryထဲကid1ခုချင်းဆီလေျာမယ်1ခုချင်းစီ
-
-    setmultiple(cpyMutiple);
-    
-
-   
-
-  }
-
-  console.log(multiple);
-
   return (
     <div>
-      <div className="Accordian">
-        <button
-          className="Multi"
-          onClick={() => setEnableMultiSelection(!EnableMultiSelection)}
-        >
-          Enable Multi Selection
-        </button>
-        {data && data.length > 0 ?
-           ( data.map((DatatItem) => (
-            <div className="Accordian1" key={DatatItem.id}>
+      <button
+        className="Button"
+        onClick={() => setMultiSelectd(!multiSelected)}
+      >
+        MultiSelection
+      </button>
+      {data && data.length > 0 ? (
+        data.map((DataItem) => (
+          <div key={DataItem.id}>
+            <div className="Main">
               <div
-                className="Title"
+                className="Head"
                 onClick={
-                  EnableMultiSelection
-                    ? () => handleMultiSelection(DatatItem.id)
-                    : () => handleSingleSelection(DatatItem.id)
+                  multiSelected
+                    ? () => MultiSelection(DataItem.id)
+                    : () => singleSection(DataItem.id)
                 }
               >
-                <h3>{DatatItem.question}</h3>
+                <h3>{DataItem.question}</h3>
                 <span>+</span>
               </div>
-
-              {selected === DatatItem.id ||
-              multiple.indexOf(DatatItem.id) !== -1 ? (
-                <p>{DatatItem.answer}</p>
-              ) : null}
-
             </div>
-          )))
-         : (<div>No data</div>) }
-      </div>
+            {selected === DataItem.id || multiple.indexOf(DataItem.id) !== -1 ? (
+              <p className="textarea">{DataItem.answer}</p>
+            ) : null}
+          </div>
+
+          //multiple.indexOf(DataItem.id) !== -1  !==ကconditionအမှားနဲ့စစ်လိုက်တာ
+
+        ))
+      ) : (
+        <h2>None Data</h2>
+      )}
     </div>
   );
 };

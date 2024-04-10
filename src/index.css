@@ -1,33 +1,21 @@
-.Accordian1{
-   text-align: center;
-    
+.Head {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.Title{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-style: italic;
+.textarea {
+  text-align: center;
 }
 
-.Title h3{
-    margin-right: 3rem;
-}
-
-.Accordian1 p{
-    color: gray;
-    width: 50%;
-    margin: 0 auto;
-}
-
-.Multi{
-    display: block;
-    margin: 0 auto;
-    padding:10px 5px;
-    outline: none;
-    border: none;
-    background-color: black;
-    color: white;
-    border-radius: 4px;
-
+.Button {
+  margin: 0 auto;
+  display: block;
+  padding: 8px 5px;
+  outline: none;
+  border: none;
+  background: black;
+  color: white;
 }
