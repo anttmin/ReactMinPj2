@@ -1,21 +1,37 @@
-.Head {
-  width: 60%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+*{
+    background: #f3f4f6;
 }
 
-.textarea {
-  text-align: center;
+.Center{
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+   
 }
 
-.Button {
-  margin: 0 auto;
-  display: block;
-  padding: 8px 5px;
-  outline: none;
-  border: none;
-  background: black;
-  color: white;
+.Item{
+    list-style: none;
+    text-align: center;
+    margin: 4px 0;
+    background: transparent;
+
+}
+
+.Item:Hover{
+    background: rgb(82, 202, 232);
+    color: white;
+}
+
+.Img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.Box{
+    width: 120px;
+    height: auto;
+    padding: 5px 2px;
+    border-radius: 5px;
+    background: #fff;
 }
